@@ -1,11 +1,15 @@
 require('dotenv').config();
 const Express = require("express");
 const app = Express();
+const controllers = require("./controllers")
 const dbConnection = require('./db');
 const middleware = require('./middleware');
 
 app.use(Express.json());
 app.use(middleware.headers);
+app.use('/user', controllers.userController);
+app.use('/grocerylist', controllers.groceryListController);
+
 
 dbConnection.authenticate()
 .then(() => {
