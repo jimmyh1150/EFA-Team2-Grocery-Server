@@ -4,12 +4,19 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { UniqueConstraintError } = require('sequelize/lib/errors');
 
+router.get('/test', (req, res) => {
+    res.send('Hey!! This is a practice route!')
+});
+
 router.post('/register', async(req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body.user;
 
     try{
         const newUser = await UserModel.create({
-            firstName, lastName, email, password: bcrypt.hashSync(password, 10)
+            firstName,
+            lastName, 
+            email, 
+            password: bcrypt.hashSync(password, 10),
         });
 
         const token = jwt.sign({id: newUser.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});

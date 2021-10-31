@@ -3,40 +3,37 @@ const router = express.Router();
 const {GroceryListModel} = require("../models");
 const {validateSession}= require('../middleware');
 
-router.post("/create", validateSession,  async(req, res) => {
-    const{
-        nameOfIngredient,
-        quantity,
-        measure,
-        weight
-    } = req.body;
+router.get('/practice', (req, res) => {
+  res.send('Hey!! This is a practice route!')
+});
 
-    try{
-        const Grocerylist = await GroceryListModel.create({
-            nameOfIngredient,
-            quantity,
-            measure,
-            weight
-        });
+//!  CREATE ITEM
+router.post("/create", validateSession,  async (req, res) => {
+      const { item } = req.body.grocerylist;
+      const { id } = req.user;
+      const Grocerylist = {
+            item,
+            owner_id: id
+      }
+  
+      try{
+        const newItem = await GroceryListModel.create(Grocerylist);
+        res.status(201).json( newItem )
 
-        res.status(201).json({
-            message: "Your List was created!",
-            Grocerylist
-        })
-    }catch (err){
+      }catch (err){
         res.status(500).json({
-            message: `Failed to create list: ${err}`      
+            message: `Failed to add item. ${err}`      
         })
     }
-})
+});
 
 
 router.put("/:id", async (req, res) => {
     const { nameOfIngredient, quantity, measure, weight} = req.body;
     try {
       const updatedGroceryList = await GroceryListModel.update(
-        { nameOfIngredient, quantity, measure,  weight},
-        { where: { id: req.params.id }, returning: true }
+        { item },
+      
       ).then((result) => {
         res.status(200).json({ message: "List Item successfully updated", updatedGroceryList, result });
       });
