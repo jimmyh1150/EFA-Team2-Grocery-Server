@@ -13,7 +13,9 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -25,5 +27,6 @@
     "url": "https://github.com/jimmyh1150/EFA-Team2-Grocery-Server/issues"
   },
   "homepage": "https://github.com/jimmyh1150/EFA-Team2-Grocery-Server#readme",
+  "devDependencies": {},
   "description": ""
 }

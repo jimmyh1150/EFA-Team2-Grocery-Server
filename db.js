@@ -1,5 +1,5 @@
-const {Sequelize} = require('sequelize');
+const Sequelize = require('sequelize');
 
-const db = new Sequelize(process.env.DB_CONNECTION_STRING)
+const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING);
 
-module.exports = db;
+module.exports = sequelize;
