@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {GroceryListModel} = require("../models");
 const {validateSession}= require('../middleware');
+const { restart } = require("nodemon");
 
 router.get('/practice', (req, res) => {
   res.send('Hey!! This is a practice route!')
@@ -27,18 +28,19 @@ router.post("/create", validateSession,  async (req, res) => {
     }
 });
 
+//! GET ALL ITEMS BY USER
+router.get("/mylist", validateSession ,async (req, res) => {
+    const { id } = req.user
 
-router.put("/:id", async (req, res) => {
-    const { nameOfIngredient, quantity, measure, weight} = req.body;
     try {
-      const updatedGroceryList = await GroceryListModel.update(
-        { item },
-      
-      ).then((result) => {
-        res.status(200).json({ message: "List Item successfully updated", updatedGroceryList, result });
+      const userItems = await GroceryListModel.findAll({
+        where: {
+          owner_id: id
+        }
       });
+      res.status(200).json(userItems)
     } catch (err) {
-      res.status(500).json({ message: `Failed to update list item: ${err}` });
+      res.status(500).json({ message: `Failed to get items. (${err})` });
     }
   });
 
