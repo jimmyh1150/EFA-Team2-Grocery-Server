@@ -56,7 +56,7 @@ router.post('/login', async(req, res) => {
                     user: loginUser,
                     message: "User successfully logged in!",
                     token
-                });
+                });z
             } else {
                 res.status(401).json({
                     message: "Incorrect password!"
@@ -73,5 +73,40 @@ router.post('/login', async(req, res) => {
         });
     };
 });
+
+//! RESET USER PASSWORD
+router.put('/:id', async (req, res) => {
+    const { password, id } = req.body;
+    const ownerId = req.body.id
+
+    const query = {
+        where: {
+            id: id
+        }
+    }
+    const updatedPW = {password:  bcrypt.hashSync(password, 13)}
+
+    try {
+        const update =  await UserModel.update(updatedPW, query);
+           res.status(200).json({
+               message: "Updated password", 
+               id: ownerId,
+               password: updatedPW});
+    }   catch(err) {
+        res.status(500).json({message: `Failed to update password. ${err}`})
+    }
+});
+
+router.delete("/:id", validateSession, async (req, res) =>{
+    try {
+        const locatedUser = await UserModel.destroy({
+          where: { id: req.params.id },
+        });
+        res.status(200).json({ message: "user successfully removed", locatedUser});
+      } catch (err) {
+        res.status(500).json({ message: `Failed to remove user: ${err}` });
+      }
+    });
+
 
 module.exports = router;
