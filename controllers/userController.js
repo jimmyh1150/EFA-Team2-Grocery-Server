@@ -38,7 +38,7 @@ router.post('/register', async(req, res) => {
                 error: `Failed to register user: ${err}`
             });
         }
-    }user
+    }
 });
 
 router.post('/login', async(req, res) => {
@@ -60,7 +60,7 @@ router.post('/login', async(req, res) => {
                     user: loginUser,
                     message: "User successfully logged in!",
                     token
-                });z
+                });
             } else {
                 res.status(401).json({
                     message: "Incorrect password!"
@@ -101,7 +101,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete("/:id", validateSession, async (req, res) =>{
+router.delete("/:id", async (req, res) =>{
     try {
         const locatedUser = await UserModel.destroy({
           where: { id: req.params.id },
