@@ -19,7 +19,9 @@ router.post('/register', async(req, res) => {
             password: bcrypt.hashSync(password, 10),
         });
 
-        const token = jwt.sign({id: newUser.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});
+        const token = jwt.sign({id: newUser.id},
+             process.env.JWT_SECRET, 
+             {expiresIn: 60 * 60 * 24});
 
         res.status(201).json({
             message: "User Registered!",
@@ -36,7 +38,7 @@ router.post('/register', async(req, res) => {
                 error: `Failed to register user: ${err}`
             });
         }
-    }user
+    }
 });
 
 router.post('/login', async(req, res) => {
@@ -50,13 +52,15 @@ router.post('/login', async(req, res) => {
             let passwordComparison =  await bcrypt.compare(password, loginUser.password);
 
             if(passwordComparison){
-                let token = jwt.sign({id: loginUser.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});
+                let token = jwt.sign({id: loginUser.id}, 
+                    process.env.JWT_SECRET, 
+                    {expiresIn: 60 * 60 * 24});
 
                 res.status(200).json({
                     user: loginUser,
                     message: "User successfully logged in!",
                     token
-                });z
+                });
             } else {
                 res.status(401).json({
                     message: "Incorrect password!"
@@ -97,7 +101,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete("/:id", validateSession, async (req, res) =>{
+router.delete("/:id", async (req, res) =>{
     try {
         const locatedUser = await UserModel.destroy({
           where: { id: req.params.id },
