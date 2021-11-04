@@ -28,7 +28,7 @@ router.post("/create", validateSession,  async (req, res) => {
     }
 });
 
-//! GET ALL ITEMS BY USER
+//!  GET ALL ITEMS BY USER
 router.get("/mylist", validateSession ,async (req, res) => {
     const { id } = req.user
 
@@ -44,16 +44,31 @@ router.get("/mylist", validateSession ,async (req, res) => {
     }
   });
 
-  router.delete("/:id", async (req, res) =>{
-    try {
-        const locatedGroceryList = await GroceryListModel.destroy({
-          where: { id: req.params.id },
-        });
-        res.status(200).json({ message: "List Item successfully removed", locatedGroceryList});
-      } catch (err) {
-        res.status(500).json({ message: `Failed to remove List Item: ${err}` });
-      }
-    });
+//!  DELETE ITEM BY ID
+router.delete("/:id", async (req, res) =>{
+  try {
+      const locatedGroceryList = await GroceryListModel.destroy({
+        where: { id: req.params.id },
+      });
+      res.status(200).json({ message: "List Item successfully removed", locatedGroceryList});
+    } catch (err) {
+      res.status(500).json({ message: `Failed to remove List Item: ${err}` });
+    }
+});
 
+//!  UPDATE/EDIT ITEM
+router.put("/:id", async (req, res) => {
+  const { item } = req.body;
+  try {
+    const updatedItems = await GroceryListModel.update(
+      { item },
+     { where: { id: req.params.id }, returning: true }
+    ).then((result) => {
+      res.status(200).json({ message: "List Item successfully updated", result });
+    });
+  } catch (err) {
+    res.status(500).json({ message: `Failed to update List Item: ${err}` });
+  }
+});
 
 module.exports = router;
