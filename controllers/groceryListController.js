@@ -56,4 +56,19 @@ router.delete("/:id", async (req, res) =>{
     }
 });
 
+//!  UPDATE/EDIT ITEM
+router.put("/:id", async (req, res) => {
+  const { item } = req.body;
+  try {
+    const updatedItems = await GroceryListModel.update(
+      { item },
+     { where: { id: req.params.id }, returning: true }
+    ).then((result) => {
+      res.status(200).json({ message: "List Item successfully updated", result });
+    });
+  } catch (err) {
+    res.status(500).json({ message: `Failed to update List Item: ${err}` });
+  }
+});
+
 module.exports = router;

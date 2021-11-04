@@ -1,4 +1,5 @@
 module.exports = {
     groceryListController: require('./groceryListController'),
-    userController: require('./userController')
+    userController: require('./userController'),
+    myListController: require('./myListController')
 };

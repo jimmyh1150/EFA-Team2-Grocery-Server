@@ -13,6 +13,8 @@ app.use('/user', controllers.userController);
 
 app.use('/grocerylist', controllers.groceryListController);
 
+app.use('/mylist', controllers.myListController);
+
 dbConnection.authenticate()
 .then(() => dbConnection.sync()) 
 .then(() => {
