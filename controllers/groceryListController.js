@@ -55,5 +55,24 @@ router.get("/mylist", validateSession ,async (req, res) => {
       }
     });
 
-
+//update items on list  
+router.put("/update/:entryid", async (req, res) =>{
+  try {
+    const updatedGroceryList = await GroceryListModel.post({
+    // const locatedGroceryList = 
+       where: { id: req.body.entryid },
+    });
+    const updatedJournal = {
+             title: title,
+             date: date,
+             entry: entry
+          };
+            
+  const update = await GroceryListModel.update(updatedJournal);
+             res.status(200).json({message: "update succesful", updatedGroceryList: result});
+           } catch (err) {
+             res.status(500).json({message: `"failed to update" {err}` });
+           }
+         });
+  
 module.exports = router;
