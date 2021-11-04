@@ -1,5 +1,6 @@
 const GroceryListModel = require('./grocerylist');
 const UserModel = require('./user');
+
 const MyListModel = require('./mylist');
 
 module.exports = {
@@ -7,3 +8,10 @@ module.exports = {
     UserModel,
     MyListModel
 }
+
+
+module.exports = {
+    GroceryListModel,
+    UserModel
+}
+
