@@ -19,6 +19,10 @@
   },
   "homepage": "https://github.com/jimmyh1150/EFA-Team2-Grocery-Server#readme",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> ed4c8256e286622f0336e6059a61cf2a0ff64a0b
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
@@ -29,7 +33,13 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.9.0"
   }
+<<<<<<< HEAD
 =======
   "description": ""
 >>>>>>> 541fc4b8a974dc055fba78ffd94be43ede6ac89f
+=======
+
+  "description": ""
+
+>>>>>>> ed4c8256e286622f0336e6059a61cf2a0ff64a0b
 }
